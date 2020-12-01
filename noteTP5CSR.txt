@@ -1,0 +1,24 @@
+note TP5 CSR :
+
+on a pas de structure de base, on doit definir qu'elle sont les thread et objets partage ou les deux.
+  =>on va pouvoir avoir un objets partager qui va pouvoir avoir un run()
+
+Partie 1 :
+  === Partie sur le multithreading et la synchro ===
+
+L'ocean est represente par une matrice carre, dans chacune des case on a des sardine ou des requins
+  => sardine allouer a une zone elle ne se deplace pas
+
+  => requins se deplace pour manger des sardines
+    => on ne doit pas avoir plus d'un requins dans une case
+    => ils attendent quand il veulent rentrer dans une case si il y a deja un requins
+    => si ya plus de sardine il n'en mange pas, on ne doit pas avoir un nombre negatif de sardines
+
+  => poisson pilote
+    => il se deplace avec un requins et uniquement un seul
+    => les requins on un maximum de poisson pilote par requins
+    => ils sont deposer dans des case et remonte sur le requins si il y a de la place
+
+L'ocean se replis sur lui meme, on passe de l'autre cote quand on est au bout
+
+Partie 2 :
