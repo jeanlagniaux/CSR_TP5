@@ -11,4 +11,14 @@ public class Zone {
 		this.nbSardine = rand.nextInt(6);
 	}
 
+	public int getNbSardine() {
+		return nbSardine;
+	}
+
+	public void setNbSardine(int nbSardine) {
+		this.nbSardine = nbSardine;
+	}
+	
+	
+
 }
