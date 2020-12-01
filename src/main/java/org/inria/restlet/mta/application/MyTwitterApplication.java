@@ -1,9 +1,6 @@
 package org.inria.restlet.mta.application;
 
 
-import org.inria.restlet.mta.resources.TweetRessource;
-import org.inria.restlet.mta.resources.UserResource;
-import org.inria.restlet.mta.resources.UsersResource;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Restlet;

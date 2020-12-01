@@ -23,7 +23,7 @@ public interface Ocean
      * @param age       The age of the user
      * @return  the new user.
      */
-    User createUser(String name, int age);
+    	//User createUser(String name, int age);
 
 
     /**
@@ -32,7 +32,7 @@ public interface Ocean
      *
      * @return the list of users
      */
-    Collection<User> getUsers();
+    //Collection<User> getUsers();
 
 
     /**
@@ -40,12 +40,8 @@ public interface Ocean
      *
      *  @return the user
      */
-    User getUser(int id);
+    //User getUser(int id);
     
-    void deleteUser(int id);
-    
-    void addTweet(int id, String tweet);
-   
-    boolean exists(int id);
+    void seDeplacer();
 
 }

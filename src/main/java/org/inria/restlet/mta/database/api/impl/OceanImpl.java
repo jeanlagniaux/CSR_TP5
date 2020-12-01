@@ -1,80 +1,53 @@
 package org.inria.restlet.mta.database.api.impl;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import org.inria.restlet.mta.backend.Zone;
 import org.inria.restlet.mta.database.api.Ocean;
 import org.inria.restlet.mta.internals.User;
 
 /**
  *
- * In-memory database 
+ * In-memory database
  *
  * @author ctedeschi
  * @author msimonin
  *
  */
-public class OceanImpl implements Ocean
-{
+public class OceanImpl implements Ocean {
 
-    /** User count (next id to give).*/
-    private int userCount_;
+	static final int LONGUEUR = 5;
+	static final int LARGEUR = 5;
 
-    /** User Hashmap. */
-    Map<Integer, User> users_;
+	//private Zone zone;
 
+	private int[][] carte = new int[LONGUEUR][LARGEUR];
 
-    public OceanImpl()
-    {
-        users_ = new HashMap<Integer, User>();
-    }
-
-    /**
-     *
-     * Synchronized user creation.
-     * @param name
-     * @param age
-     *
-     * @return the user created
-     */
-    @Override
-    public synchronized User createUser(String name, int age)
-    {
-        User user = new User(name, age);
-        user.setId(userCount_);
-        users_.put(userCount_, user);
-        userCount_ ++;
-        return user;
-    }
-
-    @Override
-    public Collection<User> getUsers()
-    {
-        return users_.values();
-    }
-
-    @Override
-    public User getUser(int id)
-    {
-        return users_.get(id);
-    }
-
-	@Override
-	public void deleteUser(int id) {
-		users_.remove(id);
+	public OceanImpl() {
+		creaCarte();
 	}
 
-	@Override
-	public boolean exists(int id) {
-		return users_.containsKey(id);
+	private void creaCarte() {
+		for (int i = 0; i < carte.length; i++) {
+			for (int j = 0; j < carte[i].length; j++) {
+				new Zone(i,j);
+			}
+		}
 	}
 
+	/**
+	 *
+	 * Synchronized user creation.
+	 * 
+	 * @param name
+	 * @param age
+	 *
+	 * @return the user created
+	 */
+
 	@Override
-	public void addTweet(int id, String tweet) {
-		users_.get(id).setTweet(tweet);
+	public void seDeplacer() {
+		
 	}
-    
 
 }
