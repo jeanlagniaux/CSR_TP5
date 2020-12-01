@@ -14,6 +14,8 @@ import org.inria.restlet.mta.internals.User;
  */
 public interface Ocean
 {
+	
+	public boolean hasRequin();
 
     /**
      *
@@ -41,7 +43,6 @@ public interface Ocean
      *  @return the user
      */
     //User getUser(int id);
+	
     
-    void seDeplacer();
-
 }

@@ -1,10 +1,7 @@
 package org.inria.restlet.mta.database.api.impl;
 
-import java.util.HashMap;
-
 import org.inria.restlet.mta.backend.Zone;
 import org.inria.restlet.mta.database.api.Ocean;
-import org.inria.restlet.mta.internals.User;
 
 /**
  *
@@ -18,10 +15,10 @@ public class OceanImpl implements Ocean {
 
 	static final int LONGUEUR = 5;
 	static final int LARGEUR = 5;
+	
+	private Zone zone;
 
-	//private Zone zone;
-
-	private int[][] carte = new int[LONGUEUR][LARGEUR];
+	private Zone[][] carte = new Zone[LONGUEUR][LARGEUR];
 
 	public OceanImpl() {
 		creaCarte();
@@ -30,24 +27,25 @@ public class OceanImpl implements Ocean {
 	private void creaCarte() {
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
-				new Zone(i,j);
+				new Zone(i, j);
 			}
 		}
 	}
 
-	/**
-	 *
-	 * Synchronized user creation.
-	 * 
-	 * @param name
-	 * @param age
-	 *
-	 * @return the user created
-	 */
-
 	@Override
-	public void seDeplacer() {
-		
+	public boolean hasRequin() {
+		boolean hasRequin = true;
+		for (int i = 0; i < carte.length; i++) {
+			for (int j = 0; j < carte[i].length; j++) {
+				if (zone.hasRequin()) {
+					hasRequin = false;
+				}
+			}
+		}
+		return hasRequin;
+	}
+
+	public static void main(String args[]) {
 	}
 
 }
