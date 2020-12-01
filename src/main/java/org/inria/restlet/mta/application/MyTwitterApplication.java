@@ -28,10 +28,10 @@ public class MyTwitterApplication extends Application
     public Restlet createInboundRoot()
     {
         Router router = new Router(getContext());
-        router.attach("/users", UsersResource.class);
-        router.attach("/users/{userId}", UserResource.class);
-        router.attach("/users/{userId}/tweets", TweetRessource.class);
-        router.attach("/users/tweets", UsersResource.class);
+//        router.attach("/zones/{zone_id}", UserResource.class);
+//        router.attach("/requin", TweetRessource.class);
+//        router.attach("/requin/{requin_id}", TweetRessource.class);
+//        router.attach("/sardine", TweetRessource.class);
         return router;
     }
 }
