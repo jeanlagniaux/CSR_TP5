@@ -1,7 +1,7 @@
 package org.inria.restlet.mta.backend;
 
-import org.inria.restlet.mta.database.api.Database;
-import org.inria.restlet.mta.database.api.impl.InMemoryDatabase;
+import org.inria.restlet.mta.database.api.Ocean;
+import org.inria.restlet.mta.database.api.impl.OceanImpl;
 
 /**
  *
@@ -14,14 +14,14 @@ import org.inria.restlet.mta.database.api.impl.InMemoryDatabase;
 public class Backend
 {
     /** Database.*/
-    private Database database_;
+    private Ocean database_;
 
     public Backend()
     {
-        database_ = new InMemoryDatabase();
+        database_ = new OceanImpl();
     }
 
-    public Database getDatabase()
+    public Ocean getDatabase()
     {
         return database_;
     }

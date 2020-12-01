@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.inria.restlet.mta.database.api.Database;
+import org.inria.restlet.mta.database.api.Ocean;
 import org.inria.restlet.mta.internals.User;
 
 /**
@@ -16,7 +16,7 @@ import org.inria.restlet.mta.internals.User;
  * @author msimonin
  *
  */
-public class InMemoryDatabase implements Database
+public class OceanImpl implements Ocean
 {
 
     /** User count (next id to give).*/
@@ -26,7 +26,7 @@ public class InMemoryDatabase implements Database
     Map<Integer, User> users_;
 
 
-    public InMemoryDatabase()
+    public OceanImpl()
     {
         users_ = new HashMap<Integer, User>();
     }

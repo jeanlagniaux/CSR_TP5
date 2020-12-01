@@ -12,7 +12,7 @@ import org.inria.restlet.mta.internals.User;
  * @author msimonin
  *
  */
-public interface Database
+public interface Ocean
 {
 
     /**
