@@ -15,8 +15,6 @@ public class OceanImpl implements Ocean {
 
 	static final int LONGUEUR = 5;
 	static final int LARGEUR = 5;
-	
-	private Zone zone;
 
 	private Zone[][] carte = new Zone[LONGUEUR][LARGEUR];
 
@@ -34,11 +32,11 @@ public class OceanImpl implements Ocean {
 
 	@Override
 	public boolean hasRequin() {
-		boolean hasRequin = true;
+		boolean hasRequin = false;
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
-				if (zone.hasRequin()) {
-					hasRequin = false;
+				if (carte[i][j].getHasRequin()) {
+					hasRequin = true;
 				}
 			}
 		}
