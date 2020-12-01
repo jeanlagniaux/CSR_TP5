@@ -15,7 +15,6 @@ import org.restlet.routing.Router;
  *
  * @author msimonin
  *
- *
  */
 public class MyTwitterApplication extends Application
 {
