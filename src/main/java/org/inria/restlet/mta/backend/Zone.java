@@ -34,6 +34,30 @@ public class Zone {
 		this.hasRequin = hasRequin;
 	}	
 	
+	public int getCoordX() {
+		return coordX;
+	}
+
+	public void setCoordX(int coordX) {
+		this.coordX = coordX;
+	}
+
+	public int getCoordY() {
+		return coordY;
+	}
+
+	public void setCoordY(int coordY) {
+		this.coordY = coordY;
+	}
+
+	public Requin getRequin() {
+		return requin;
+	}
+
+	public void setRequin(Requin requin) {
+		this.requin = requin;
+	}
+
 	public void createRequin(){
 		this.hasRequin = false;
 		Random rand = new Random();
