@@ -2,10 +2,20 @@ package org.inria.restlet.mta.backend;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import org.inria.restlet.mta.database.api.Ocean;
+
 public class Requin extends Thread{
 
 	private static final int lifeMax = 10;
 	private int lifeRemaining;
+	public Zone getZone() {
+		return zone;
+	}
+
+	public void setZone(Zone zone) {
+		this.zone = zone;
+	}
+
 	private Zone zone;
 	
 	public Requin(Zone zone) {
@@ -18,12 +28,13 @@ public class Requin extends Thread{
 		seDeplacer();
 	}
 
-	public void seDeplacer(){
+	public synchronized void seDeplacer(){
 		System.out.println("Le requin se déplace");
 		
 		while(getLifeRemaining() != 0){
 			setLifeRemaining(getLifeRemaining()-1);
 			System.out.println("Il reste "+getLifeRemaining()+" cycles de vie au requin");
+			// TDOD call methode se déplacer de ocean
 		}
 		System.out.println("Le requin a fini de chasser dans cette région de l'océan");
 	}

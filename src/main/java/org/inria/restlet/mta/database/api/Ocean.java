@@ -3,6 +3,7 @@ package org.inria.restlet.mta.database.api;
 import java.util.Collection;
 import java.util.List;
 
+import org.inria.restlet.mta.backend.Zone;
 import org.inria.restlet.mta.internals.User;
 
 /**
@@ -16,6 +17,7 @@ public interface Ocean
 {
 	
 	public boolean hasRequin();
+	public Zone getzoneByCoor(int x, int y);
 
     /**
      *
