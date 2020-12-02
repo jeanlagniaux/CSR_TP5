@@ -2,6 +2,8 @@ package org.inria.restlet.mta.backend;
 
 import java.util.Random;
 
+import org.inria.restlet.mta.database.api.Ocean;
+
 public class Zone {
 
 	private int nbSardine;
@@ -9,13 +11,19 @@ public class Zone {
 	private int coordY;
 	private Requin requin;
 	private Boolean hasRequin;
-	
-	public Zone(int coordX, int coordY) {
+	private Ocean ocean;
+
+	public Zone(int coordX, int coordY, Ocean ocean) {
 		this.coordX = coordX;
 		this.coordY = coordY;
+		this.ocean = ocean;
 		createRequin();
 		Random rand = new Random();
 		this.nbSardine = rand.nextInt(6);
+	}
+
+	public Ocean getOcean() {
+		return ocean;
 	}
 
 	public int getNbSardine() {
@@ -25,15 +33,15 @@ public class Zone {
 	public void setNbSardine(int nbSardine) {
 		this.nbSardine = nbSardine;
 	}
-	
+
 	public Boolean getHasRequin() {
 		return hasRequin;
 	}
 
 	public void setHasRequin(Boolean hasRequin) {
 		this.hasRequin = hasRequin;
-	}	
-	
+	}
+
 	public int getCoordX() {
 		return coordX;
 	}
@@ -58,11 +66,11 @@ public class Zone {
 		this.requin = requin;
 	}
 
-	public void createRequin(){
+	public void createRequin() {
 		this.hasRequin = false;
 		Random rand = new Random();
 		int x = rand.nextInt(6);
-		if( x == 1){
+		if (x == 1) {
 			this.requin = new Requin(this);
 			this.hasRequin = true;
 		}

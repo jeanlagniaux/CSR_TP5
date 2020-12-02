@@ -13,38 +13,37 @@ import org.inria.restlet.mta.internals.User;
  * @author msimonin
  *
  */
-public interface Ocean
-{
-	
+public interface Ocean {
+
 	public boolean hasRequin();
+
 	public Zone getzoneByCoor(int x, int y);
 
-    /**
-     *
-     * Create a new user in the database.
-     *
-     * @param name      The name of the user
-     * @param age       The age of the user
-     * @return  the new user.
-     */
-    	//User createUser(String name, int age);
+	public void deplacement(Zone zone);
 
+	/**
+	 *
+	 * Create a new user in the database.
+	 *
+	 * @param name The name of the user
+	 * @param age  The age of the user
+	 * @return the new user.
+	 */
+	// User createUser(String name, int age);
 
-    /**
-     *
-     * Returns the list of users.
-     *
-     * @return the list of users
-     */
-    //Collection<User> getUsers();
+	/**
+	 *
+	 * Returns the list of users.
+	 *
+	 * @return the list of users
+	 */
+	// Collection<User> getUsers();
 
+	/**
+	 * Returns the user with a given id.
+	 *
+	 * @return the user
+	 */
+	// User getUser(int id);
 
-    /**
-     *  Returns the user with a given id.
-     *
-     *  @return the user
-     */
-    //User getUser(int id);
-	
-    
 }

@@ -31,7 +31,7 @@ public class OceanImpl implements Ocean {
 	private void creaCarte() {
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
-				new Zone(i, j);
+				new Zone(i, j, this);
 			}
 		}
 	}
@@ -49,6 +49,7 @@ public class OceanImpl implements Ocean {
 		return hasRequin;
 	}
 
+	@Override
 	public void deplacement(Zone zone) {
 		int dep_x = zone.getCoordX();
 		int dep_y = zone.getCoordY();
@@ -71,16 +72,14 @@ public class OceanImpl implements Ocean {
 		} else if (r == 3) {
 			arr_y = dep_y - 1 % LARGEUR;
 		}
-		
+
 		while (getzoneByCoor(arr_x, arr_y).getHasRequin()) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		// on choisi la prochaine zone random qu'on appel new zone
 		zone.getRequin().setZone(getzoneByCoor(arr_x, arr_y));
 		notifyAll();
 	}
