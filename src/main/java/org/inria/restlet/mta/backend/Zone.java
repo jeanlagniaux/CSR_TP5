@@ -7,12 +7,13 @@ public class Zone {
 	private int nbSardine;
 	private int coordX;
 	private int coordY;
+	private Requin requin;
 	private Boolean hasRequin;
 	
 	public Zone(int coordX, int coordY) {
 		this.coordX = coordX;
 		this.coordY = coordY;
-		this.hasRequin = false;
+		createRequin();
 		Random rand = new Random();
 		this.nbSardine = rand.nextInt(6);
 	}
@@ -32,5 +33,15 @@ public class Zone {
 	public void setHasRequin(Boolean hasRequin) {
 		this.hasRequin = hasRequin;
 	}	
+	
+	public void createRequin(){
+		this.hasRequin = false;
+		Random rand = new Random();
+		int x = rand.nextInt(6);
+		if( x == 1){
+			this.requin = new Requin(this);
+			this.hasRequin = true;
+		}
+	}
 
 }
