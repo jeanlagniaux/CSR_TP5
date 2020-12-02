@@ -6,14 +6,16 @@ public class Requin extends Thread{
 
 	private static final int lifeMax = 10;
 	private int lifeRemaining;
+	private Zone zone;
 	
-	public Requin() {
+	public Requin(Zone zone) {
+		this.zone = zone;
 		this.lifeRemaining = lifeMax;
 	}
 	
 	public void run() {
+		manger();
 		seDeplacer();
-		System.out.println("le camion a fini de faire travailler");
 	}
 
 	public void seDeplacer(){
@@ -32,5 +34,9 @@ public class Requin extends Thread{
 
 	public void setLifeRemaining(int lifeRemaining) {
 		this.lifeRemaining = lifeRemaining;
+	}
+	
+	public void manger(){
+		this.zone.setNbSardine(this.zone.getNbSardine() -1);
 	}
 }
