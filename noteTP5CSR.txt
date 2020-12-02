@@ -13,6 +13,7 @@ L'ocean est represente par une matrice carre, dans chacune des case on a des sar
     => on ne doit pas avoir plus d'un requins dans une case
     => ils attendent quand il veulent rentrer dans une case si il y a deja un requins
     => si ya plus de sardine il n'en mange pas, on ne doit pas avoir un nombre negatif de sardines
+    => une fois mort on fait sortire le requin du systmee pour ne pas avoir de deadlock
 
   => poisson pilote
     => il se deplace avec un requins et uniquement un seul
