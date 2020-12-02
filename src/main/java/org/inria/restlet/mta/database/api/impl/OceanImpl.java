@@ -17,7 +17,7 @@ public class OceanImpl implements Ocean {
 	static final int LARGEUR = 5;
 
 	private Zone[][] carte = new Zone[LONGUEUR][LARGEUR];
-
+	
 	public OceanImpl() {
 		creaCarte();
 	}
@@ -42,8 +42,17 @@ public class OceanImpl implements Ocean {
 		}
 		return hasRequin;
 	}
+	
+	public void deplacement(Zone zone) {
+		
+	}
 
 	public static void main(String args[]) {
+		
+		OceanImpl oc = new OceanImpl();
+		
+		
 	}
+	
 
 }
