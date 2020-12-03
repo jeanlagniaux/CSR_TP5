@@ -31,9 +31,28 @@ public class OceanImpl implements Ocean {
 	private void creaCarte() {
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
-				new Zone(i, j, this);
+				carte[i][j] = new Zone(i, j, this);
 			}
 		}
+		System.out.println("il y a " + getNbRequin() + " requins dans l'océan");
+	}
+
+	@Override
+	public int getNbRequin() {
+		int cpt = 0;
+		for (int i = 0; i < carte.length; i++) {
+			for (int j = 0; j < carte[i].length; j++) {
+				if (getzoneByCoor(i, j).getHasRequin()) {
+					cpt++;
+				}
+			}
+		}
+		return cpt;
+
+	}
+
+	public Zone[][] getCarte() {
+		return carte;
 	}
 
 	@Override
@@ -82,9 +101,6 @@ public class OceanImpl implements Ocean {
 		}
 		zone.getRequin().setZone(getzoneByCoor(arr_x, arr_y));
 		notifyAll();
-	}
-
-	public static void main(String args[]) {
 	}
 
 }

@@ -20,6 +20,11 @@ public interface Ocean {
 	public Zone getzoneByCoor(int x, int y);
 
 	public void deplacement(Zone zone);
+	
+	int getNbRequin();
+	
+	public Zone[][] getCarte();
+
 
 	/**
 	 *

@@ -25,13 +25,13 @@ public class Requin extends Thread {
 	}
 
 	public void run() {
+		System.out.println("le requin " + Thread.currentThread().getName() + " Nage dans l'ocean");
 		manger();
 		seDeplacer();
 	}
 
 	public synchronized void seDeplacer() {
-		System.out.println("Le requin se déplace");
-
+		System.out.println("Le requin " + Thread.currentThread().getName() + " se déplace");
 		while (getLifeRemaining() != 0) {
 			setLifeRemaining(getLifeRemaining() - 1);
 			System.out.println("Il reste " + getLifeRemaining() + " cycles de vie au requin");
