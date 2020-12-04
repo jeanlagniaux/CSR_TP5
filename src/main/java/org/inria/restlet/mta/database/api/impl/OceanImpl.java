@@ -2,6 +2,7 @@ package org.inria.restlet.mta.database.api.impl;
 
 import java.util.Random;
 
+import org.inria.restlet.mta.backend.Requin;
 import org.inria.restlet.mta.backend.Zone;
 import org.inria.restlet.mta.database.api.Ocean;
 
@@ -69,7 +70,7 @@ public class OceanImpl implements Ocean {
 	}
 
 	@Override
-	public void deplacement(Zone zone) {
+	public synchronized void deplacement(Zone zone) {
 		int dep_x = zone.getCoordX();
 		int dep_y = zone.getCoordY();
 
@@ -80,27 +81,46 @@ public class OceanImpl implements Ocean {
 		int r = rand.nextInt(4);
 
 		if (r == 0) {
-			arr_x = dep_x + 1 % LONGUEUR;
+			System.out.println("le requin "+zone.getRequin().currentThread().getName()+" veut se déplace à bas");
+			arr_x = (dep_x + 1) % (LONGUEUR);
+			
 
 		} else if (r == 1) {
-			arr_x = dep_x - 1 % LONGUEUR;
-
+			System.out.println("le requin "+zone.getRequin().currentThread().getName()+" veut se déplace à haut");
+			if(dep_x == 0){
+				arr_x = 4;
+			} else {
+				arr_x = (dep_x - 1) % (LONGUEUR);
+			}
+			
+			
 		} else if (r == 2) {
-			arr_y = dep_y + 1 % LARGEUR;
+			System.out.println("le requin "+zone.getRequin().currentThread().getName()+" veut se déplace en droite");
+			arr_y = (dep_y + 1) % (LARGEUR);
+			
 
 		} else if (r == 3) {
-			arr_y = dep_y - 1 % LARGEUR;
+			System.out.println("le requin "+zone.getRequin().currentThread().getName()+" veut se déplace en gauche");
+			if(dep_y == 0){
+				arr_y = 4;
+			} else {
+				arr_y = (dep_y - 1) % (LARGEUR);
+			}
+			
+			
 		}
 
 		while (getzoneByCoor(arr_x, arr_y).getHasRequin()) {
 			try {
+				System.out.println("il y a un requin dans la zone("+arr_x+")("+arr_y+") -> on attend");
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 		zone.getRequin().setZone(getzoneByCoor(arr_x, arr_y));
-		notifyAll();
+		System.out.println("Le requin "+zone.getRequin().currentThread().getName()+" se trouve désormais dans la zone de coordonné : ("+zone.getRequin().getZone().getCoordX()+")("+zone.getRequin().getZone().getCoordY()+")");
+		notify();
 	}
 
 }

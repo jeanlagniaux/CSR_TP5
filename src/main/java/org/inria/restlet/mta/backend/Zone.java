@@ -70,7 +70,7 @@ public class Zone {
 	public void createRequin() {
 		this.hasRequin = false;
 		Random rand = new Random();
-		int x = rand.nextInt(3);
+		int x = rand.nextInt(10);
 		if (x == 1) {
 			this.requin = new Requin(this);
 			this.hasRequin = true;

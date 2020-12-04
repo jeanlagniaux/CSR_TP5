@@ -1,9 +1,5 @@
 package org.inria.restlet.mta.backend;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
-import org.inria.restlet.mta.database.api.Ocean;
-
 public class Requin extends Thread {
 
 	private static final int lifeMax = 10;
@@ -25,20 +21,26 @@ public class Requin extends Thread {
 	}
 
 	public void run() {
-		System.out.println("le requin " + Thread.currentThread().getName() + " Nage dans l'ocean");
+		System.out.println("le requin " + Thread.currentThread().getName() + " Nage dans la zone : ("+this.zone.getCoordX()+")("+this.zone.getCoordY()+")");
 		manger();
 		seDeplacer();
 	}
 
 	public synchronized void seDeplacer() {
 		System.out.println("Le requin " + Thread.currentThread().getName() + " se déplace");
+		
 		while (getLifeRemaining() != 0) {
-			setLifeRemaining(getLifeRemaining() - 1);
-			System.out.println("Il reste " + getLifeRemaining() + " cycles de vie au requin");
+			// deplacement
 			getZone().getOcean().deplacement(this.zone);
+			// System.out.println("Le requin "+ Thread.currentThread().getName() + " se trouve désormais dans la zone de coordonné : ("+this.zone.getCoordX()+")("+this.zone.getCoordY()+")");
+			// vie
+			setLifeRemaining(getLifeRemaining() - 1);
+			//System.out.println("Il reste " + getLifeRemaining() + " cycles de vie au requin " + Thread.currentThread().getName() );
 		}
-		System.out.println("Le requin a fini de chasser dans cette région de l'océan");
-	}
+		
+		System.out.println("Le requin " + Thread.currentThread().getName() + " a fini de chasser dans cette région de l'océan");
+	} 
+	
 
 	public int getLifeRemaining() {
 		return lifeRemaining;
