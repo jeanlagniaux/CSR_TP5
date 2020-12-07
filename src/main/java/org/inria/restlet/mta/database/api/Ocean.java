@@ -1,10 +1,7 @@
 package org.inria.restlet.mta.database.api;
 
-import java.util.Collection;
-import java.util.List;
-
+import org.inria.restlet.mta.backend.Requin;
 import org.inria.restlet.mta.backend.Zone;
-import org.inria.restlet.mta.internals.User;
 
 /**
  *
@@ -19,7 +16,7 @@ public interface Ocean {
 
 	public Zone getzoneByCoor(int x, int y);
 
-	public void deplacement(Zone zone);
+	public void deplacement(Requin req);
 	
 	int getNbRequin();
 	

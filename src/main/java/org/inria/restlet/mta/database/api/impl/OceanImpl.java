@@ -70,17 +70,19 @@ public class OceanImpl implements Ocean {
 	}
 
 	@Override
-	public synchronized void deplacement(Zone zone) {
+	public synchronized void deplacement(Requin req) {
 		
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
-				System.out.println(
-						"Requin dans la zone : (" + i + ")(" + j + ") ?  ->" + getzoneByCoor(i, j).getHasRequin()+" ->"+getzoneByCoor(i, j));
+				if(carte[i][j].getHasRequin()) {
+					System.out.println(
+							"Requin dans la zone : (" + i + ")(" + j + ") ?  ->" + getzoneByCoor(i, j).getHasRequin()+" --> Nombre de sardines : "+getzoneByCoor(i, j).getNbSardine());
+				}				
 			}
 		}
 		
-		int dep_x = zone.getCoordX();
-		int dep_y = zone.getCoordY();
+		int dep_x = req.getZone().getCoordX();
+		int dep_y = req.getZone().getCoordY();
 
 		int arr_x = dep_x;
 		int arr_y = dep_y;
@@ -89,12 +91,12 @@ public class OceanImpl implements Ocean {
 		int r = rand.nextInt(4);
 
 		if (r == 0) {
-			System.out.println("le requin "+zone.getRequin().currentThread().getName()+" veut se déplace en bas");
+			System.out.println("le requin "+req.currentThread().getName()+" veut se déplace en bas");
 			arr_x = (dep_x + 1) % (LONGUEUR);
 			
 
 		} else if (r == 1) {
-			System.out.println("le requin "+zone.getRequin().currentThread().getName()+" veut se déplace en haut");
+			System.out.println("le requin "+req.currentThread().getName()+" veut se déplace en haut");
 			if(dep_x == 0){
 				arr_x = 4;
 			} else {
@@ -103,12 +105,12 @@ public class OceanImpl implements Ocean {
 			
 			
 		} else if (r == 2) {
-			System.out.println("le requin "+zone.getRequin().currentThread().getName()+" veut se déplace à droite");
+			System.out.println("le requin "+req.currentThread().getName()+" veut se déplace à droite");
 			arr_y = (dep_y + 1) % (LARGEUR);
 			
 
 		} else if (r == 3) {
-			System.out.println("le requin "+zone.getRequin().currentThread().getName()+" veut se déplace à gauche");
+			System.out.println("le requin "+req.currentThread().getName()+" veut se déplace à gauche");
 			if(dep_y == 0){
 				arr_y = 4;
 			} else {
@@ -117,23 +119,24 @@ public class OceanImpl implements Ocean {
 			
 			
 		}
-
+		
+		getzoneByCoor(dep_x, dep_y).setHasRequin(false);
+		
 		while (getzoneByCoor(arr_x, arr_y).getHasRequin()) {
 			try {
 				System.out.println("il y a un requin dans la zone("+arr_x+")("+arr_y+") -> on attend");
-				wait();
+				wait(); // req.
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 		System.out.println("Zone d'arrivée prévue : "+getzoneByCoor(arr_x, arr_y));
-		getzoneByCoor(dep_x, dep_y).setHasRequin(false);
-		zone.getRequin().setZone(getzoneByCoor(arr_x, arr_y));
+		
+		req.setZone(getzoneByCoor(arr_x, arr_y));
 		getzoneByCoor(arr_x, arr_y).setHasRequin(true);
 		
-		System.out.println("Le requin "+zone.getRequin().currentThread().getName()+" se trouve désormais dans la zone de coordonné : ("+zone.getRequin().getZone().getCoordX()+")("+zone.getRequin().getZone().getCoordY()+")");
-		System.out.println("Zone du requin "+zone.getRequin().currentThread().getName()+" : "+ zone.getRequin().getZone());
-		notify();
+		System.out.println("Le requin "+req.currentThread().getName()+" se trouve désormais dans la zone de coordonné : ("+req.getZone().getCoordX()+")("+req.getZone().getCoordY()+")");
+		notifyAll();
 		
 	}
 

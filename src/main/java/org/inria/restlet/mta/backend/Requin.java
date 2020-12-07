@@ -22,22 +22,26 @@ public class Requin extends Thread {
 
 	public void run() {
 		System.out.println("le requin " + Thread.currentThread().getName() + " Nage dans la zone : ("+this.zone.getCoordX()+")("+this.zone.getCoordY()+")");
-		manger();
-		seDeplacer();
+		nager();
 	}
 
-	public synchronized void seDeplacer() {
-		System.out.println("Le requin " + Thread.currentThread().getName() + " se déplace");
+	public synchronized void nager() {
 		
 		while (getLifeRemaining() != 0) {
-			//this.zone.setRequin(null);
-			getZone().getOcean().deplacement(this.zone);
-			//this.zone.setRequin(this);
+			manger();
+			try {
+				sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			getZone().getOcean().deplacement(this);
 			setLifeRemaining(getLifeRemaining() - 1);
-			//System.out.println("Il reste " + getLifeRemaining() + " cycles de vie au requin " + Thread.currentThread().getName() );
 		}
-		
+		manger(); // pour manger dans la derniere zone;
+		getZone().setHasRequin(false);
+		getZone().setRequin(null);
 		System.out.println("Le requin " + Thread.currentThread().getName() + " a fini de chasser dans cette région de l'océan");
+		
 	} 
 	
 
@@ -50,6 +54,8 @@ public class Requin extends Thread {
 	}
 
 	public void manger() {
-		this.zone.setNbSardine(this.zone.getNbSardine() - 1);
+		if(this.zone.getNbSardine()>0) {
+			this.zone.setNbSardine(this.zone.getNbSardine() - 1);
+		}
 	}
 }

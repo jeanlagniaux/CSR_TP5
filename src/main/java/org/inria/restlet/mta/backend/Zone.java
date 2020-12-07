@@ -19,7 +19,7 @@ public class Zone {
 		this.ocean = ocean;
 		createRequin();
 		Random rand = new Random();
-		this.nbSardine = rand.nextInt(6);
+		this.nbSardine = rand.nextInt(10);
 	}
 
 	public Ocean getOcean() {
@@ -69,7 +69,7 @@ public class Zone {
 	public void createRequin() {
 		this.hasRequin = false;
 		Random rand = new Random();
-		int x = rand.nextInt(10);
+		int x = rand.nextInt(3);
 		if (x == 1) {
 			this.requin = new Requin(this);
 			this.hasRequin = true;
