@@ -117,10 +117,11 @@ public class OceanImpl implements Ocean {
 				arr_y = (dep_y - 1) % (LARGEUR);
 			}
 			
-			
 		}
 		
+		// on a notre stock de poisson pilote
 		getzoneByCoor(dep_x, dep_y).setHasRequin(false);
+		
 		
 		while (getzoneByCoor(arr_x, arr_y).getHasRequin()) {
 			try {
@@ -138,6 +139,12 @@ public class OceanImpl implements Ocean {
 		System.out.println("Le requin "+req.currentThread().getName()+" se trouve désormais dans la zone de coordonné : ("+req.getZone().getCoordX()+")("+req.getZone().getCoordY()+")");
 		notifyAll();
 		
+	}
+	
+	public void prendPoissonPilote(Zone zone) {
+		if (zone.listPoissonPiloteIsEmpty() == false ) {
+			
+		}
 	}
 
 }

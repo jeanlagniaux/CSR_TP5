@@ -1,24 +1,23 @@
 package org.inria.restlet.mta.backend;
 
+import java.util.ArrayList;
+
 public class Requin extends Thread {
 
 	private static final int lifeMax = 10;
+	private static final int placeMax = 3;
 	private int lifeRemaining;
-
-	public Zone getZone() {
-		return zone;
-	}
-
-	public void setZone(Zone zone) {
-		this.zone = zone;
-	}
-
+	private int placeDispo;
 	private Zone zone;
+	private ArrayList<PoissonPilote> myPLs = new ArrayList<PoissonPilote>();
+
 
 	public Requin(Zone zone) {
 		this.zone = zone;
 		this.lifeRemaining = lifeMax;
+		this.placeDispo = placeMax;
 	}
+
 
 	public void run() {
 		System.out.println("le requin " + Thread.currentThread().getName() + " Nage dans la zone : ("+this.zone.getCoordX()+")("+this.zone.getCoordY()+")");
@@ -44,7 +43,26 @@ public class Requin extends Thread {
 		
 	} 
 	
+	public void 
+	
+	public void manger() {
+		if(this.zone.getNbSardine()>0) {
+			this.zone.setNbSardine(this.zone.getNbSardine() - 1);
+		}
+	}
+	
+	
+	
+	// GETTER AND SETTER
+	
+	public Zone getZone() {
+		return zone;
+	}
 
+	public void setZone(Zone zone) {
+		this.zone = zone;
+	}
+	
 	public int getLifeRemaining() {
 		return lifeRemaining;
 	}
@@ -53,9 +71,15 @@ public class Requin extends Thread {
 		this.lifeRemaining = lifeRemaining;
 	}
 
-	public void manger() {
-		if(this.zone.getNbSardine()>0) {
-			this.zone.setNbSardine(this.zone.getNbSardine() - 1);
-		}
+	public int getPlaceDispo() {
+		return placeDispo;
 	}
+
+	public void setPlaceDispo(int placeDispo) {
+		this.placeDispo = placeDispo;
+	}
+	
+	
+
+	
 }

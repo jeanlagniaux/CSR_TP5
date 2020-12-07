@@ -1,5 +1,6 @@
 package org.inria.restlet.mta.backend;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.inria.restlet.mta.database.api.Ocean;
@@ -12,12 +13,14 @@ public class Zone {
 	private Requin requin;
 	private Boolean hasRequin;
 	private Ocean ocean;
+	private ArrayList<PoissonPilote> listPps = new ArrayList<PoissonPilote>();
 
 	public Zone(int coordX, int coordY, Ocean ocean) {
 		this.coordX = coordX;
 		this.coordY = coordY;
 		this.ocean = ocean;
 		createRequin();
+		createPoissonPilote();
 		Random rand = new Random();
 		this.nbSardine = rand.nextInt(10);
 	}
@@ -65,6 +68,13 @@ public class Zone {
 	public void setRequin(Requin requin) {
 		this.requin = requin;
 	}
+	
+	public Boolean listPoissonPiloteIsEmpty() {
+		if(listPps.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 
 	public void createRequin() {
 		this.hasRequin = false;
@@ -73,6 +83,19 @@ public class Zone {
 		if (x == 1) {
 			this.requin = new Requin(this);
 			this.hasRequin = true;
+		}
+	}
+	
+	public void createPoissonPilote() {
+		Random rand = new Random();
+		int x = rand.nextInt(3);
+		if (x == 1) {
+			int y = rand.nextInt(5) + 1;
+			for (int i = 0; i < y ; i++) {
+				PoissonPilote p = new PoissonPilote(this);
+				listPps.add(p);
+				i++;
+			}
 		}
 	}
 
