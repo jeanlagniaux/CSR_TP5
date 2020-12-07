@@ -20,7 +20,6 @@ public class Zone {
 		createRequin();
 		Random rand = new Random();
 		this.nbSardine = rand.nextInt(6);
-		System.out.println("on construit la zone (" + this.getCoordX() + ")(" + this.getCoordY() + ")");
 	}
 
 	public Ocean getOcean() {

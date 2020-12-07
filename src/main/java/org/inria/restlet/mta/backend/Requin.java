@@ -30,10 +30,9 @@ public class Requin extends Thread {
 		System.out.println("Le requin " + Thread.currentThread().getName() + " se déplace");
 		
 		while (getLifeRemaining() != 0) {
-			// deplacement
+			//this.zone.setRequin(null);
 			getZone().getOcean().deplacement(this.zone);
-			// System.out.println("Le requin "+ Thread.currentThread().getName() + " se trouve désormais dans la zone de coordonné : ("+this.zone.getCoordX()+")("+this.zone.getCoordY()+")");
-			// vie
+			//this.zone.setRequin(this);
 			setLifeRemaining(getLifeRemaining() - 1);
 			//System.out.println("Il reste " + getLifeRemaining() + " cycles de vie au requin " + Thread.currentThread().getName() );
 		}
