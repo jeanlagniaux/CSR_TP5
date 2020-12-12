@@ -1,12 +1,12 @@
 package org.inria.restlet.mta.backend;
 
-public class PoissonPilote extends Thread{
+public class PoissonPilote extends Thread {
 
 	private static final int lifeMax = 3;
 	private Zone zone;
 	private int lifeRemaining;
 	private Boolean hasRequin;
-	
+
 	public PoissonPilote(Zone zone) {
 		this.zone = zone;
 		this.lifeRemaining = lifeMax;
@@ -14,39 +14,29 @@ public class PoissonPilote extends Thread{
 	}
 
 	public void run() {
+		System.out.println("le poison pilote" + Thread.currentThread().getName() + " commence sa vie");
 		while (this.getLifeRemaining() != 0) {
-			this.saccrocher();
-			// se decrocher.
+			nager();
 		}
 	}
-	
+
 	public synchronized void nager() {
-		
-		// ici mettre en attente ? 
-		
+
+		// ici mettre en attente ?
+
 		while (getLifeRemaining() != 0) {
 			try {
-				sleep(1000);
+				sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			System.out.println("je suis le poisson " + Thread.currentThread().getName() + "et il me reste "
+					+ getLifeRemaining() + " de jour a vivre");
 			setLifeRemaining(getLifeRemaining() - 1);
 		}
-		
+
 	}
-	public void saccrocher(Zone zone) {
-		while (this.getPlaceDispo() == 0) {
-			try {
-				wait();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		
-		zone.getRequin().ppSaccrocher(this);
-		System.out.println("le pp schercheré");
-	}
-	
-	
+
 	// GETTER AND SETTER
 	public Zone getZone() {
 		return zone;

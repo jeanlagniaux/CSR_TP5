@@ -14,11 +14,15 @@ public interface Ocean {
 
 	public boolean hasRequin();
 
+	public boolean hasPoisonPilote();
+	
 	public Zone getzoneByCoor(int x, int y);
 
 	public void deplacementReq(Requin req);
 	
 	int getNbRequin();
+	
+	int getNbPoissonPilote();
 	
 	public Zone[][] getCarte();
 
