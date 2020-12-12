@@ -141,9 +141,9 @@ public class OceanImpl implements Ocean {
 		
 	}
 	
-	public void prendPoissonPilote(Zone zone) {
-		if (zone.listPoissonPiloteIsEmpty() == false ) {
-			
+	public void prendPoissonPilote(Zone zone, Requin req) {
+		if (! zone.listPoissonPiloteIsEmpty() ) {
+		
 		}
 	}
 

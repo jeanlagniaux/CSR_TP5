@@ -88,7 +88,7 @@ public class Zone {
 	
 	public void createPoissonPilote() {
 		Random rand = new Random();
-		int x = rand.nextInt(3);
+		int x = rand.nextInt(2);
 		if (x == 1) {
 			int y = rand.nextInt(5) + 1;
 			for (int i = 0; i < y ; i++) {

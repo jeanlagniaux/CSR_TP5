@@ -14,7 +14,7 @@ public class PoissonPilote extends Thread{
 	}
 
 	public void run() {
-		
+		nager();
 	}
 	
 	public synchronized void nager() {

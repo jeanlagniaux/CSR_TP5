@@ -43,8 +43,6 @@ public class Requin extends Thread {
 		
 	} 
 	
-	public void 
-	
 	public void manger() {
 		if(this.zone.getNbSardine()>0) {
 			this.zone.setNbSardine(this.zone.getNbSardine() - 1);
