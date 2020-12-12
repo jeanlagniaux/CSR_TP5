@@ -16,7 +16,7 @@ public interface Ocean {
 
 	public Zone getzoneByCoor(int x, int y);
 
-	public void deplacement(Requin req);
+	public void deplacementReq(Requin req);
 	
 	int getNbRequin();
 	

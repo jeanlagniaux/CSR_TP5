@@ -2,6 +2,7 @@ package org.inria.restlet.mta.database.api.impl;
 
 import java.util.Random;
 
+import org.inria.restlet.mta.backend.PoissonPilote;
 import org.inria.restlet.mta.backend.Requin;
 import org.inria.restlet.mta.backend.Zone;
 import org.inria.restlet.mta.database.api.Ocean;
@@ -33,6 +34,7 @@ public class OceanImpl implements Ocean {
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
 				carte[i][j] = new Zone(i, j, this);
+				createPoissonPilote(carte[i][j]);
 			}
 		}
 		System.out.println("il y a " + getNbRequin() + " requins dans l'océan");
@@ -70,7 +72,7 @@ public class OceanImpl implements Ocean {
 	}
 
 	@Override
-	public synchronized void deplacement(Requin req) {
+	public synchronized void deplacementReq(Requin req) {
 		
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
@@ -136,14 +138,21 @@ public class OceanImpl implements Ocean {
 		req.setZone(getzoneByCoor(arr_x, arr_y));
 		getzoneByCoor(arr_x, arr_y).setHasRequin(true);
 		
+		
 		System.out.println("Le requin "+req.currentThread().getName()+" se trouve désormais dans la zone de coordonné : ("+req.getZone().getCoordX()+")("+req.getZone().getCoordY()+")");
 		notifyAll();
 		
 	}
 	
-	public void prendPoissonPilote(Zone zone, Requin req) {
-		if (! zone.listPoissonPiloteIsEmpty() ) {
-		
+	public void createPoissonPilote(Zone zone) {
+		Random rand = new Random();
+		int x = rand.nextInt(2);
+		if (x == 1) {
+			int y = rand.nextInt(5) + 1;
+			for (int i = 0; i < y ; i++) {
+				PoissonPilote p = new PoissonPilote(zone);
+				i++;
+			}
 		}
 	}
 

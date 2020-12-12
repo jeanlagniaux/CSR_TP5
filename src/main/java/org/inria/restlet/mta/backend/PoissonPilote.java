@@ -14,7 +14,10 @@ public class PoissonPilote extends Thread{
 	}
 
 	public void run() {
-		nager();
+		while (this.getLifeRemaining() != 0) {
+			this.saccrocher();
+			// se decrocher.
+		}
 	}
 	
 	public synchronized void nager() {
@@ -30,6 +33,17 @@ public class PoissonPilote extends Thread{
 			setLifeRemaining(getLifeRemaining() - 1);
 		}
 		
+	}
+	public void saccrocher(Zone zone) {
+		while (this.getPlaceDispo() == 0) {
+			try {
+				wait();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		
+		zone.getRequin().ppSaccrocher(this);
+		System.out.println("le pp schercheré");
 	}
 	
 	

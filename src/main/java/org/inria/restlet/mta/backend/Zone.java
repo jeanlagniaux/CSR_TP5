@@ -3,6 +3,8 @@ package org.inria.restlet.mta.backend;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 import org.inria.restlet.mta.database.api.Ocean;
 
 public class Zone {
@@ -20,7 +22,6 @@ public class Zone {
 		this.coordY = coordY;
 		this.ocean = ocean;
 		createRequin();
-		createPoissonPilote();
 		Random rand = new Random();
 		this.nbSardine = rand.nextInt(10);
 	}
@@ -69,6 +70,11 @@ public class Zone {
 		this.requin = requin;
 	}
 	
+	
+	public ArrayList<PoissonPilote> getListPps() {
+		return listPps;
+	}
+
 	public Boolean listPoissonPiloteIsEmpty() {
 		if(listPps.isEmpty()) {
 			return true;
@@ -86,17 +92,5 @@ public class Zone {
 		}
 	}
 	
-	public void createPoissonPilote() {
-		Random rand = new Random();
-		int x = rand.nextInt(2);
-		if (x == 1) {
-			int y = rand.nextInt(5) + 1;
-			for (int i = 0; i < y ; i++) {
-				PoissonPilote p = new PoissonPilote(this);
-				listPps.add(p);
-				i++;
-			}
-		}
-	}
 
 }

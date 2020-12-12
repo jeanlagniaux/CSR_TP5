@@ -33,7 +33,7 @@ public class Requin extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			getZone().getOcean().deplacement(this);
+			getZone().getOcean().deplacementReq(this);
 			setLifeRemaining(getLifeRemaining() - 1);
 		}
 		manger(); // pour manger dans la derniere zone;
@@ -48,6 +48,29 @@ public class Requin extends Thread {
 			this.zone.setNbSardine(this.zone.getNbSardine() - 1);
 		}
 	}
+	
+	
+	public synchronized void ppSaccrocher(PoissonPilote pp) {
+			
+			// on doit ajouter le poisson dansle requin 
+			this.getZone().getListPps().remove(pp);
+			this.getMyPLs().add(pp);
+			this.setPlaceDispo(this.getPlaceDispo() - 1);
+			System.out.println("");
+			
+			notifyAll();
+		
+	}
+	
+	public synchronized void ppSeDecrocher(PoissonPilote pp) {
+		pp.setZone(this.getZone());
+		this.getMyPLs().remove(pp);
+		this.getZone().getListPps().add(pp);
+		
+	}
+	
+	
+	
 	
 	
 	
@@ -76,6 +99,12 @@ public class Requin extends Thread {
 	public void setPlaceDispo(int placeDispo) {
 		this.placeDispo = placeDispo;
 	}
+
+	public ArrayList<PoissonPilote> getMyPLs() {
+		return myPLs;
+	}
+	
+	
 	
 	
 
