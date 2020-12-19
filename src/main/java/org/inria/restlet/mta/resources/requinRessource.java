@@ -28,19 +28,14 @@ public class requinRessource extends ServerResource {
 		return new JsonRepresentation(userObject);
 	}
 
-	// ajouter au requin un identifiant et créer une méthode dans l'océean qui recherche le requin de cette identifiant
 	@Get("json")
 	public Representation getRequin() throws Exception {
-		String req = (String) getRequest().getAttributes().get("requin_id");
-		int id_Req = Integer.valueOf(req);
-		
-		// TODO
-		
-		//req = backend_.getDatabase().getRequinById();
-
+		String id = (String) getRequest().getAttributes().get("requin_id");
+		int id_Req = Integer.valueOf(id);
+		Requin req = backend_.getDatabase().getRequinyId(id_Req);
 		JSONObject resultObject = new JSONObject();
-		//resultObject.put("vie restante", req.getLifeRemaining());
-		//resultObject.put("la zone actuelle", req.getZone());
+		resultObject.put("vie restante", req.getLifeRemaining());
+		resultObject.put("la zone actuelle", req.getZone());
 		JsonRepresentation result = new JsonRepresentation(resultObject);
 		return result;
 	}

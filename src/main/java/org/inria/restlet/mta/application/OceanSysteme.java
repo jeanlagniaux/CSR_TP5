@@ -36,6 +36,7 @@ class OceanSysteme {
 		for (int i = 0; i < ocean2.getCarte().length; i++) {
 			for (int j = 0; j < ocean2.getCarte().length; j++) {
 				if (ocean2.getzoneByCoor(i, j).getHasRequin()) {
+					ocean2.getzoneByCoor(i, j).getRequin().setIdRequin(i);
 					ocean2.getzoneByCoor(i, j).getRequin().start();
 				}
 			}

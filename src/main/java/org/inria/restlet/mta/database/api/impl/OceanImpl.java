@@ -208,4 +208,17 @@ public class OceanImpl implements Ocean {
 		return zone.creaRequin();
 
 	}
+
+	@Override
+	public Requin getRequinyId(int id) {
+		Requin reqRep = null;
+		for (int i = 0; i < carte.length; i++) {
+			for (int j = 0; j < carte[i].length; j++) {
+				if (getzoneByCoor(i, j).getHasRequin() && getzoneByCoor(i, j).getRequin().getId() == id) {
+					reqRep = getzoneByCoor(i, j).getRequin();
+				}
+			}
+		}
+		return reqRep;
+	}
 }

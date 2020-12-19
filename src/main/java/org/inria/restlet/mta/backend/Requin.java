@@ -13,7 +13,6 @@ public class Requin extends Thread {
 	private ArrayList<PoissonPilote> myPLs = new ArrayList<PoissonPilote>();
 
 	public Requin(Zone zone) {
-		//this.idRequin = id;
 		this.zone = zone;
 		this.lifeRemaining = lifeMax;
 		this.placeDispo = placeMax;
@@ -105,6 +104,14 @@ public class Requin extends Thread {
 
 	public ArrayList<PoissonPilote> getMyPLs() {
 		return myPLs;
+	}
+	
+	public int getIdRequin() {
+		return idRequin;
+	}
+
+	public void setIdRequin(int idRequin) {
+		this.idRequin = idRequin;
 	}
 
 }

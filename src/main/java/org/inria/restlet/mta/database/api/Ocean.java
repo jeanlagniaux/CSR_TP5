@@ -34,6 +34,8 @@ public interface Ocean {
 	public int getNbSardine();
 	
 	public Requin createRequin(Zone zone);
+	
+	public Requin getRequinyId(int id);
 
 	/**
 	 *
