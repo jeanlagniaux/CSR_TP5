@@ -1,11 +1,12 @@
 package org.inria.restlet.mta.database.api.impl;
 
+import java.util.Iterator;
 import java.util.Random;
 
-import org.inria.restlet.mta.backend.PoissonPilote;
-import org.inria.restlet.mta.backend.Requin;
-import org.inria.restlet.mta.backend.Zone;
 import org.inria.restlet.mta.database.api.Ocean;
+import org.inria.restlet.mta.internals.PoissonPilote;
+import org.inria.restlet.mta.internals.Requin;
+import org.inria.restlet.mta.internals.Zone;
 
 /**
  *
@@ -38,7 +39,6 @@ public class OceanImpl implements Ocean {
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
 				carte[i][j] = new Zone(i, j, this);
-				createPoissonPilote(carte[i][j]);
 			}
 		}
 		System.out.println("il y a " + getNbRequin() + " requins dans l'océan");
@@ -72,20 +72,6 @@ public class OceanImpl implements Ocean {
 	}
 
 	@Override
-	public int getNbPoissonPilote() {
-		int cptPp = 0;
-		for (int i = 0; i < carte.length; i++) {
-			for (int j = 0; j < carte[i].length; j++) {
-				if (getzoneByCoor(i, j).getHasRequin()) {
-					cptPp++;
-				}
-			}
-		}
-		return cptPp;
-
-	}
-
-	@Override
 	public boolean hasPoisonPilote() {
 		boolean hasPp = false;
 		for (int i = 0; i < carte.length; i++) {
@@ -99,13 +85,13 @@ public class OceanImpl implements Ocean {
 	}
 
 	@Override
-	public synchronized void deplacementReq(Requin req) {
+	public synchronized Zone choixZoneReq(Requin req) {
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
 				if (carte[i][j].getHasRequin()) {
-					System.out.println(
-							"Requin dans la zone : (" + i + ")(" + j + ") ?  ->" + getzoneByCoor(i, j).getHasRequin()
-									+ " --> Nombre de sardines : " + getzoneByCoor(i, j).getNbSardine());
+//					System.out.println(
+//							"Requin dans la zone : (" + i + ")(" + j + ") ?  ->" + getzoneByCoor(i, j).getHasRequin()
+//									+ " --> Nombre de sardines : " + getzoneByCoor(i, j).getNbSardine());
 				}
 			}
 		}
@@ -120,11 +106,13 @@ public class OceanImpl implements Ocean {
 		int r = rand.nextInt(4);
 
 		if (r == 0) {
-			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace en bas");
+			// System.out.println("le requin " + req.currentThread().getName() + " veut se
+			// déplace en bas");
 			arr_x = (dep_x + 1) % (LONGUEUR);
 
 		} else if (r == 1) {
-			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace en haut");
+			// System.out.println("le requin " + req.currentThread().getName() + " veut se
+			// déplace en haut");
 			if (dep_x == 0) {
 				arr_x = 4;
 			} else {
@@ -132,11 +120,13 @@ public class OceanImpl implements Ocean {
 			}
 
 		} else if (r == 2) {
-			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace à droite");
+			// System.out.println("le requin " + req.currentThread().getName() + " veut se
+			// déplace à droite");
 			arr_y = (dep_y + 1) % (LARGEUR);
 
 		} else if (r == 3) {
-			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace à gauche");
+			// System.out.println("le requin " + req.currentThread().getName() + " veut se
+			// déplace à gauche");
 			if (dep_y == 0) {
 				arr_y = 4;
 			} else {
@@ -144,43 +134,33 @@ public class OceanImpl implements Ocean {
 			}
 
 		}
+		notifyAll();
+		return (getzoneByCoor(arr_x, arr_y));
+
+	}
+
+	@Override
+	public synchronized void deplacementReq(Requin req, Zone zoneArr) {
 
 		// on a notre stock de poisson pilote
 		// pp saccrocher
-		while (req.getPlaceDispo() != 0) {
-			if (getzoneByCoor(dep_x, dep_y).getListPps().isEmpty()) {
-				break;
-			}
-			Random pois = new Random();
-			int lepoois = pois.nextInt(getzoneByCoor(dep_x, dep_y).getListPps().size());
-			if (lepoois == 0) {
-				lepoois = lepoois + 1;
-			}
-			System.out.println("========================================================== size = " + lepoois);
-			req.ppSaccrocher(getzoneByCoor(dep_x, dep_y).getListPps().get(lepoois));
-		}
 
-		getzoneByCoor(dep_x, dep_y).setHasRequin(false);
+		req.getZone().setHasRequin(false);
 
-		while (getzoneByCoor(arr_x, arr_y).getHasRequin()) {
+		while (zoneArr.getHasRequin()) {
 			try {
-				System.out.println("il y a un requin dans la zone(" + arr_x + ")(" + arr_y + ") -> on attend");
+				System.out.println("il y a un requin dans la zone(" + zoneArr.getCoordX() + ")(" + zoneArr.getCoordY() + ") -> on attend");
 				wait(); // req.
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Zone d'arrivée prévue : " + getzoneByCoor(arr_x, arr_y));
+		System.out.println("Zone d'arrivée prévue : " + zoneArr);
 
 		// on change de zone
 
-		req.setZone(getzoneByCoor(arr_x, arr_y));
-		getzoneByCoor(arr_x, arr_y).setHasRequin(true);
-
-		for (int i = 0; i < req.getMyPLs().size(); i++) {
-			req.ppSeDecrocher(req.getMyPLs().get(i));
-			i++;
-		}
+		req.setZone(zoneArr);
+		zoneArr.setHasRequin(true);
 
 		System.out.println(
 				"Le requin " + req.currentThread().getName() + " se trouve désormais dans la zone de coordonné : ("
@@ -188,18 +168,24 @@ public class OceanImpl implements Ocean {
 		notifyAll();
 
 	}
-
-	public void createPoissonPilote(Zone zone) {
-		Random rand = new Random();
-		int x = rand.nextInt(2);
-		if (x == 1) {
-			int y = rand.nextInt(5) + 1;
-			for (int i = 0; i < y; i++) {
-				PoissonPilote p = new PoissonPilote(zone);
-				zone.getListPps().add(p);
-				i++;
-			}
+	
+	public synchronized void ppSaccrocher(Zone zone, PoissonPilote pp) {
+		while (zone.getCptPp() != 0 && zone.getRequin().getPlaceDispo() !=0) {
+			zone.getRequin().getMyPLs().add(pp);
+			zone.setCptPp(zone.getCptPp() - 1);
+			zone.getRequin().setPlaceDispo(zone.getRequin().getPlaceDispo() - 1);
+			System.out.println("le poisson" + pp + "vient de s'accrocher au requin ");
+			notifyAll();
 		}
+		
 	}
 
+	public synchronized void ppSeDecrocher(PoissonPilote pp) {
+//		zone.getre
+//		pp.setZone(this.getZone());
+//		this.getMyPLs().remove(pp);
+//		// this.getZone().getListPps().add(pp);
+//		System.out.println("le poison " + Thread.currentThread().getName() + " vient d'arriver dans la zone ");
+
+	}
 }

@@ -1,4 +1,4 @@
-package org.inria.restlet.mta.backend;
+package org.inria.restlet.mta.internals;
 
 import java.util.ArrayList;
 
@@ -25,6 +25,8 @@ public class Requin extends Thread {
 
 	public synchronized void nager() {
 
+		Zone zoneArr;
+
 		while (getLifeRemaining() != 0) {
 			manger();
 			try {
@@ -32,9 +34,12 @@ public class Requin extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+
 			// on essaye d'accorcher un pp
-			getZone().getOcean().deplacementReq(this);
+			zoneArr = getZone().getOcean().choixZoneReq(this);
+			
+			getZone().getOcean().deplacementReq(this, zoneArr);
+
 			setLifeRemaining(getLifeRemaining() - 1);
 		}
 		manger(); // pour manger dans la derniere zone;
@@ -51,22 +56,24 @@ public class Requin extends Thread {
 		}
 	}
 
-	public synchronized void ppSaccrocher(PoissonPilote pp) {
-		this.getZone().getListPps().remove(pp);
-		this.getMyPLs().add(pp);
-		this.setPlaceDispo(this.getPlaceDispo() - 1);
-		System.out.println("");
-		notifyAll();
-
-	}
-
-	public synchronized void ppSeDecrocher(PoissonPilote pp) {
-		pp.setZone(this.getZone());
-		this.getMyPLs().remove(pp);
-		this.getZone().getListPps().add(pp);
-		System.out.println("le poison " + Thread.currentThread().getName() + " vient d'arriver dans la zone ");
-		
-	}
+//	public synchronized void ppSaccrocher(PoissonPilote pp) {
+//		while (this.getZone().getCptPp() != 0 && this.getPlaceDispo() !=0) {
+//			this.getMyPLs().add(pp);
+//			this.getZone().setCptPp(this.getZone().getCptPp() - 1);
+//			this.setPlaceDispo(this.getPlaceDispo() - 1);
+//			System.out.println("le poisson" + pp + "vient de s'accrocher au requin ");
+//			notifyAll();
+//		}
+//		
+//	}
+//
+//	public synchronized void ppSeDecrocher(PoissonPilote pp) {
+//		pp.setZone(this.getZone());
+//		this.getMyPLs().remove(pp);
+//		// this.getZone().getListPps().add(pp);
+//		System.out.println("le poison " + Thread.currentThread().getName() + " vient d'arriver dans la zone ");
+//
+//	}
 
 	// GETTER AND SETTER
 

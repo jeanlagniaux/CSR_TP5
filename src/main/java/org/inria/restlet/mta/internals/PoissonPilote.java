@@ -1,4 +1,4 @@
-package org.inria.restlet.mta.backend;
+package org.inria.restlet.mta.internals;
 
 public class PoissonPilote extends Thread {
 
@@ -21,9 +21,6 @@ public class PoissonPilote extends Thread {
 	}
 
 	public synchronized void nager() {
-
-		// ici mettre en attente ?
-
 		while (getLifeRemaining() != 0) {
 			try {
 				sleep(100);
@@ -32,9 +29,32 @@ public class PoissonPilote extends Thread {
 			}
 			System.out.println("je suis le poisson " + Thread.currentThread().getName() + "et il me reste "
 					+ getLifeRemaining() + " de jour a vivre");
+
+			// ici mettre accrocher dans requin, avec le wait si jamais on a pas de place
+			saccrocher();
+			decrocher();
+
+			// ici ce décrocher
+
 			setLifeRemaining(getLifeRemaining() - 1);
 		}
 
+	}
+
+	public synchronized void saccrocher() {
+		while (!this.zone.getHasRequin() && this.zone.getRequin().getPlaceDispo() == 0) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		this.getZone().getOcean().ppSaccrocher(this.zone, this);;
+	}
+	
+	public synchronized void decrocher() {
+		//this.zone.getRequin().ppSeDecrocher(this);
 	}
 
 	// GETTER AND SETTER

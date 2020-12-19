@@ -1,7 +1,8 @@
 package org.inria.restlet.mta.database.api;
 
-import org.inria.restlet.mta.backend.Requin;
-import org.inria.restlet.mta.backend.Zone;
+import org.inria.restlet.mta.internals.PoissonPilote;
+import org.inria.restlet.mta.internals.Requin;
+import org.inria.restlet.mta.internals.Zone;
 
 /**
  *
@@ -15,17 +16,20 @@ public interface Ocean {
 	public boolean hasRequin();
 
 	public boolean hasPoisonPilote();
-	
+
 	public Zone getzoneByCoor(int x, int y);
 
-	public void deplacementReq(Requin req);
-	
-	int getNbRequin();
-	
-	int getNbPoissonPilote();
-	
-	public Zone[][] getCarte();
+	public Zone choixZoneReq(Requin req);
 
+	public void deplacementReq(Requin req, Zone zoneArr);
+
+	int getNbRequin();
+
+	public Zone[][] getCarte();
+	
+	public void ppSaccrocher(Zone zone, PoissonPilote pp);
+	
+	public void ppSeDecrocher(PoissonPilote pp);
 
 	/**
 	 *

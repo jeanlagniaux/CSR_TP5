@@ -1,4 +1,4 @@
-package org.inria.restlet.mta.backend;
+package org.inria.restlet.mta.internals;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,7 +15,8 @@ public class Zone {
 	private Requin requin;
 	private Boolean hasRequin;
 	private Ocean ocean;
-	private ArrayList<PoissonPilote> listPps = new ArrayList<PoissonPilote>();
+	private int cptPp = 0;
+	//private ArrayList<PoissonPilote> listPps = new ArrayList<PoissonPilote>(); // supprimer la liste de pp et juste changer les param de zone de pp comme requin une fois un chamgement de zone effectuer 
 
 	public Zone(int coordX, int coordY, Ocean ocean) {
 		this.coordX = coordX;
@@ -70,17 +71,6 @@ public class Zone {
 		this.requin = requin;
 	}
 	
-	
-	public ArrayList<PoissonPilote> getListPps() {
-		return listPps;
-	}
-
-	public Boolean listPoissonPiloteIsEmpty() {
-		if(listPps.isEmpty()) {
-			return true;
-		}
-		return false;
-	}
 
 	public void createRequin() {
 		this.hasRequin = false;
@@ -91,6 +81,28 @@ public class Zone {
 			this.hasRequin = true;
 		}
 	}
+	
+	public void createPoissonPilote() {
+		Random rand = new Random();
+		int x = rand.nextInt(2);
+		if (x == 1) {
+			int y = rand.nextInt(5) + 1;
+			for (int i = 0; i < y; i++) {
+				PoissonPilote p = new PoissonPilote(this);
+				cptPp ++;
+				i++;
+			}
+		}
+	}
+
+	public int getCptPp() {
+		return cptPp;
+	}
+
+	public void setCptPp(int cptPp) {
+		this.cptPp = cptPp;
+	}
+
 	
 
 }
