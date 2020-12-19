@@ -1,4 +1,4 @@
-package org.inria.restlet.mta.internals;
+package org.inria.restlet.mta.backend;
 
 import java.util.ArrayList;
 
@@ -7,11 +7,13 @@ public class Requin extends Thread {
 	private static final int lifeMax = 10;
 	private static final int placeMax = 3;
 	private int lifeRemaining;
+	private int idRequin;
 	private int placeDispo;
 	private Zone zone;
 	private ArrayList<PoissonPilote> myPLs = new ArrayList<PoissonPilote>();
 
 	public Requin(Zone zone) {
+		//this.idRequin = id;
 		this.zone = zone;
 		this.lifeRemaining = lifeMax;
 		this.placeDispo = placeMax;

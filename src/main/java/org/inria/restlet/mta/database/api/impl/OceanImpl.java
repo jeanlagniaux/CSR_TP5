@@ -3,10 +3,11 @@ package org.inria.restlet.mta.database.api.impl;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.inria.restlet.mta.backend.PoissonPilote;
+import org.inria.restlet.mta.backend.Requin;
+import org.inria.restlet.mta.backend.Zone;
 import org.inria.restlet.mta.database.api.Ocean;
-import org.inria.restlet.mta.internals.PoissonPilote;
-import org.inria.restlet.mta.internals.Requin;
-import org.inria.restlet.mta.internals.Zone;
+import org.inria.restlet.mta.resources.requinRessource;
 
 /**
  *
@@ -149,7 +150,8 @@ public class OceanImpl implements Ocean {
 
 		while (zoneArr.getHasRequin()) {
 			try {
-				System.out.println("il y a un requin dans la zone(" + zoneArr.getCoordX() + ")(" + zoneArr.getCoordY() + ") -> on attend");
+				System.out.println("il y a un requin dans la zone(" + zoneArr.getCoordX() + ")(" + zoneArr.getCoordY()
+						+ ") -> on attend");
 				wait(); // req.
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -168,16 +170,16 @@ public class OceanImpl implements Ocean {
 		notifyAll();
 
 	}
-	
+
 	public synchronized void ppSaccrocher(Zone zone, PoissonPilote pp) {
-		while (zone.getCptPp() != 0 && zone.getRequin().getPlaceDispo() !=0) {
+		while (zone.getCptPp() != 0 && zone.getRequin().getPlaceDispo() != 0) {
 			zone.getRequin().getMyPLs().add(pp);
 			zone.setCptPp(zone.getCptPp() - 1);
 			zone.getRequin().setPlaceDispo(zone.getRequin().getPlaceDispo() - 1);
 			System.out.println("le poisson" + pp + "vient de s'accrocher au requin ");
 			notifyAll();
 		}
-		
+
 	}
 
 	public synchronized void ppSeDecrocher(PoissonPilote pp) {
@@ -186,6 +188,24 @@ public class OceanImpl implements Ocean {
 //		this.getMyPLs().remove(pp);
 //		// this.getZone().getListPps().add(pp);
 //		System.out.println("le poison " + Thread.currentThread().getName() + " vient d'arriver dans la zone ");
+
+	}
+
+	@Override
+	public int getNbSardine() {
+		int cptSardine = 0;
+		for (int i = 0; i < carte.length; i++) {
+			for (int j = 0; j < carte[i].length; j++) {
+				cptSardine = cptSardine + getzoneByCoor(i, j).getNbSardine();
+
+			}
+		}
+		return cptSardine;
+	}
+
+	@Override
+	public Requin createRequin(Zone zone) {
+		return zone.creaRequin();
 
 	}
 }

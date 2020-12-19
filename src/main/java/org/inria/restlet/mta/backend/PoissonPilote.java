@@ -1,4 +1,4 @@
-package org.inria.restlet.mta.internals;
+package org.inria.restlet.mta.backend;
 
 public class PoissonPilote extends Thread {
 

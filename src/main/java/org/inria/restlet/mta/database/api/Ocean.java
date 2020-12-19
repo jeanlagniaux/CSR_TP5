@@ -1,8 +1,8 @@
 package org.inria.restlet.mta.database.api;
 
-import org.inria.restlet.mta.internals.PoissonPilote;
-import org.inria.restlet.mta.internals.Requin;
-import org.inria.restlet.mta.internals.Zone;
+import org.inria.restlet.mta.backend.PoissonPilote;
+import org.inria.restlet.mta.backend.Requin;
+import org.inria.restlet.mta.backend.Zone;
 
 /**
  *
@@ -30,6 +30,10 @@ public interface Ocean {
 	public void ppSaccrocher(Zone zone, PoissonPilote pp);
 	
 	public void ppSeDecrocher(PoissonPilote pp);
+	
+	public int getNbSardine();
+	
+	public Requin createRequin(Zone zone);
 
 	/**
 	 *

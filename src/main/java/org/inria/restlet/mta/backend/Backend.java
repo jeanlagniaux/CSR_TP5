@@ -13,17 +13,17 @@ import org.inria.restlet.mta.database.api.impl.OceanImpl;
  */
 public class Backend
 {
-//    /** Database.*/
-//    private Ocean database_;
-//
-//    public Backend()
-//    {
-//        database_ = new OceanImpl();
-//    }
-//
-//    public Ocean getDatabase()
-//    {
-//        return database_;
-//    }
+    /** Database.*/
+    private Ocean database_;
+
+    public Backend()
+    {
+        database_ = new OceanImpl();
+    }
+
+    public Ocean getDatabase()
+    {
+        return database_;
+    }
 
 }

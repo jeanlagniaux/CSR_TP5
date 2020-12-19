@@ -1,6 +1,6 @@
 package org.inria.restlet.mta.main;
 
-import org.inria.restlet.mta.application.MyTwitterApplication;
+import org.inria.restlet.mta.application.ApplicationRestlet;
 import org.inria.restlet.mta.backend.Backend;
 import org.restlet.Application;
 import org.restlet.Component;
@@ -35,7 +35,7 @@ public final class Main
         component.getServers().add(Protocol.HTTP, 8124);
 
         // Create an application
-        Application application = new MyTwitterApplication(context);
+        Application application = new ApplicationRestlet(context);
 
         // Add the backend into component's context
         Backend backend = new Backend();
