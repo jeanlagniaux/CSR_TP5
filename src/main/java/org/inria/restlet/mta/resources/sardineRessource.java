@@ -24,8 +24,8 @@ public class sardineRessource extends ServerResource {
 	public Representation getNbSardines() throws Exception {
 		int nbSardine = backend_.getDatabase().getNbSardine();
 		JSONObject userObject = new JSONObject();
-		userObject.put("nombre de sardine", nbSardine); // call a la fonction qui passe a travers toutes les zones de
-														// notre ocean et qui compte le nombre de sardine
+		userObject.put("nombre de sardine", nbSardine); // call à la fonction qui passe à travers toutes les zones de
+														// notre ocean et qui compte le nombre de sardines
 		return new JsonRepresentation(userObject);
 	}
 

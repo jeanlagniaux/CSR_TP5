@@ -17,7 +17,7 @@ public class Requin extends Thread {
 		this.lifeRemaining = lifeMax;
 		this.placeDispo = placeMax;
 	}
-	
+
 	public Requin(Zone zone, int id) {
 		this.zone = zone;
 		this.idRequin = id;
@@ -43,14 +43,11 @@ public class Requin extends Thread {
 				e.printStackTrace();
 			}
 
-			// on essaye d'accorcher un pp
 			zoneArr = getZone().getOcean().choixZoneReq(this);
-			
 			getZone().getOcean().deplacementReq(this, zoneArr);
-
 			setLifeRemaining(getLifeRemaining() - 1);
 		}
-		manger(); // pour manger dans la derniere zone;
+		manger(); // permet de manger dans la derniere zone;
 		getZone().setHasRequin(false);
 		getZone().setRequin(null);
 		System.out.println(
@@ -63,27 +60,6 @@ public class Requin extends Thread {
 			this.zone.setNbSardine(this.zone.getNbSardine() - 1);
 		}
 	}
-
-//	public synchronized void ppSaccrocher(PoissonPilote pp) {
-//		while (this.getZone().getCptPp() != 0 && this.getPlaceDispo() !=0) {
-//			this.getMyPLs().add(pp);
-//			this.getZone().setCptPp(this.getZone().getCptPp() - 1);
-//			this.setPlaceDispo(this.getPlaceDispo() - 1);
-//			System.out.println("le poisson" + pp + "vient de s'accrocher au requin ");
-//			notifyAll();
-//		}
-//		
-//	}
-//
-//	public synchronized void ppSeDecrocher(PoissonPilote pp) {
-//		pp.setZone(this.getZone());
-//		this.getMyPLs().remove(pp);
-//		// this.getZone().getListPps().add(pp);
-//		System.out.println("le poison " + Thread.currentThread().getName() + " vient d'arriver dans la zone ");
-//
-//	}
-
-	// GETTER AND SETTER
 
 	public Zone getZone() {
 		return zone;
@@ -112,7 +88,7 @@ public class Requin extends Thread {
 	public ArrayList<PoissonPilote> getMyPLs() {
 		return myPLs;
 	}
-	
+
 	public int getIdRequin() {
 		return idRequin;
 	}
@@ -120,6 +96,5 @@ public class Requin extends Thread {
 	public void setIdRequin(int idRequin) {
 		this.idRequin = idRequin;
 	}
-	
 
 }

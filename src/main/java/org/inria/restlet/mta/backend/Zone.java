@@ -15,15 +15,13 @@ public class Zone {
 	private Requin requin;
 	private Boolean hasRequin;
 	private Ocean ocean;
-	private int cptPp = 0;
-	// private ArrayList<PoissonPilote> listPps = new ArrayList<PoissonPilote>(); //
-	// supprimer la liste de pp et juste changer les param de zone de pp comme
-	// requin une fois un chamgement de zone effectuer
+	private ArrayList<PoissonPilote> listPps = new ArrayList<PoissonPilote>();
 
 	public Zone(int coordX, int coordY, Ocean ocean) {
 		this.coordX = coordX;
 		this.coordY = coordY;
 		this.ocean = ocean;
+		createPoissonPilote();
 		createRequinAlea();
 		Random rand = new Random();
 		this.nbSardine = rand.nextInt(10);
@@ -74,8 +72,8 @@ public class Zone {
 	}
 
 	/**
-	 * ici on utilise des random pour s'avoir si oui ou non on créer un requin dans
-	 * la zone (chance de 1/3)
+	 * ici on utilise des random pour savoir si oui ou non on crée un requin dans la
+	 * zone (chance de 1/3)
 	 */
 	public void createRequinAlea() {
 		this.hasRequin = false;
@@ -104,29 +102,30 @@ public class Zone {
 	}
 
 	/**
-	 * ici on utilise des random pour s'avoir si oui ou non on créer des poisson
-	 * pilote dans cette zone et ensuite on définie aléatoirement le nombre de
-	 * poisson pilote que l'on créer
+	 * ici on utilise des random pour savoir si oui ou non on crée des poissons
+	 * pilotes dans cette zone et ensuite on défini aléatoirement le nombre de
+	 * poissons pilotes que l'on crée
 	 */
 	public void createPoissonPilote() {
+		int ppNb = 0;
 		Random rand = new Random();
 		int x = rand.nextInt(2);
 		if (x == 1) {
 			int y = rand.nextInt(5) + 1;
 			for (int i = 0; i < y; i++) {
+				ppNb = ppNb + 1;
 				PoissonPilote p = new PoissonPilote(this);
-				cptPp++;
-				i++;
+				listPps.add(p);
 			}
 		}
 	}
 
-	public int getCptPp() {
-		return cptPp;
+	public ArrayList<PoissonPilote> getListPps() {
+		return listPps;
 	}
 
-	public void setCptPp(int cptPp) {
-		this.cptPp = cptPp;
+	public void setListPps(ArrayList<PoissonPilote> listPps) {
+		this.listPps = listPps;
 	}
 
 }

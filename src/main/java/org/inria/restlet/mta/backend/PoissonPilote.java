@@ -6,6 +6,7 @@ public class PoissonPilote extends Thread {
 	private Zone zone;
 	private int lifeRemaining;
 	private Boolean hasRequin;
+	private Requin req = null;
 
 	public PoissonPilote(Zone zone) {
 		this.zone = zone;
@@ -21,6 +22,7 @@ public class PoissonPilote extends Thread {
 	}
 
 	public synchronized void nager() {
+		Zone zoneDep = this.getZone();
 		while (getLifeRemaining() != 0) {
 			try {
 				sleep(100);
@@ -30,11 +32,16 @@ public class PoissonPilote extends Thread {
 			System.out.println("je suis le poisson " + Thread.currentThread().getName() + "et il me reste "
 					+ getLifeRemaining() + " de jour a vivre");
 
-			// ici mettre accrocher dans requin, avec le wait si jamais on a pas de place
 			saccrocher();
+			while (this.getZone().equals(this.getReq().getZone())) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			decrocher();
-
-			// ici ce décrocher
 
 			setLifeRemaining(getLifeRemaining() - 1);
 		}
@@ -42,19 +49,24 @@ public class PoissonPilote extends Thread {
 	}
 
 	public synchronized void saccrocher() {
-		while (!this.zone.getHasRequin() && this.zone.getRequin().getPlaceDispo() == 0) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		while (true) {
+			if (this.zone.getHasRequin() && this.zone.getRequin().getPlaceDispo() != 0) {
+				this.getZone().getOcean().ppSaccrocher(this.zone, this);
+				notifyAll();
+			} else {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
-		this.getZone().getOcean().ppSaccrocher(this.zone, this);;
 	}
-	
+
 	public synchronized void decrocher() {
-		//this.zone.getRequin().ppSeDecrocher(this);
+		this.getZone().getOcean().ppSeDecrocher(this);
+		notifyAll();
 	}
 
 	// GETTER AND SETTER
@@ -80,6 +92,14 @@ public class PoissonPilote extends Thread {
 
 	public void setHasRequin(Boolean hasRequin) {
 		this.hasRequin = hasRequin;
+	}
+
+	public Requin getReq() {
+		return req;
+	}
+
+	public void setReq(Requin req) {
+		this.req = req;
 	}
 
 }

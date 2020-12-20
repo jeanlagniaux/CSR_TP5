@@ -21,7 +21,7 @@ public class zonesRessource extends ServerResource {
 	@Get("json")
 	public Representation getZone() throws Exception {
 		String zoneId = (String) getRequest().getAttributes().get("zone_id");
-		// on recup la zone en string pour ensuite la séparer et la passer en deu int X
+		// on recupère la zone en string pour ensuite la séparer et la passer en deux int X
 		// et Y
 		char x = zoneId.charAt(0);
 		char y = zoneId.charAt(1);

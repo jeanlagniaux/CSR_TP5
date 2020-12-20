@@ -20,7 +20,7 @@ public class requinRessource extends ServerResource {
 
 	/**
 	 * permet de retourner des informations sur un requin en particulier en fonction
-	 * de son identifiant donnée par l'utilisateur
+	 * de son identifiant donné par l'utilisateur
 	 */
 	@Get("json")
 	public Representation getRequin() throws Exception {

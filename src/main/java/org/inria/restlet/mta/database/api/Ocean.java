@@ -14,21 +14,21 @@ import org.inria.restlet.mta.backend.Zone;
 public interface Ocean {
 
 	/**
-	 * permet de s'avoir s'il y a encore un requin dans l'océan
+	 * permet de savoir s'il y a encore un requin dans l'océan
 	 * 
 	 * @return un boolean qui indique si il reste un requin ou non
 	 */
 	public boolean hasRequin();
 
 	/**
-	 * permet de s'avoir s'il y a encore un poissonPilote dans l'océan
+	 * permet de savoir s'il y a encore un poissonPilote dans l'océan
 	 * 
 	 * @return un boolean qui indique si il reste un poisson pilote ou non
 	 */
 	public boolean hasPoisonPilote();
 
 	/**
-	 * permet de retourner une précise a partire de ses coordonées
+	 * permet de retourner une zone précise à partir de ses coordonées
 	 * 
 	 * @param int x
 	 * @param int y
@@ -37,20 +37,20 @@ public interface Ocean {
 	public Zone getzoneByCoor(int x, int y);
 
 	/**
-	 * permet au requin de choisir la zone vers la quelle l va se déplacer de
+	 * permet au requin de choisir la zone vers laquelle il va se déplacer de
 	 * manière aléatoire
 	 * 
 	 * @param un requin pour pouvoir l'appeler dans le run du requin
 	 * 
-	 * @return la zone vers le quelle le requin va se déplacer
+	 * @return la zone vers laquelle le requin va se déplacer
 	 */
 	public Zone choixZoneReq(Requin req);
 
 	/**
-	 * permet d'éffecturer le déplacement du requin
+	 * permet d'effectuer le déplacement du requin
 	 * 
 	 * @param un requin
-	 * @param la zone d'arrivé qui aurait été obtenue grace a la méthode
+	 * @param la zone d'arrivée qui aurait été obtenue grace à la méthode
 	 *           ChoixZoneReq()
 	 * 
 	 * 
@@ -65,21 +65,21 @@ public interface Ocean {
 	int getNbRequin();
 
 	/**
-	 * permet de retourner la carte qui dans notre cas est l'océean
+	 * permet de retourner la carte qui dans notre cas est l'océan
 	 * 
 	 * @return l'océan
 	 */
 	public Zone[][] getCarte();
 
 	/**
-	 * permet au poisson pilote de faire s'accrocher a un requin et rentrer dans la
+	 * permet au poisson pilote de faire s'accrocher à un requin et rentrer dans la
 	 * liste de poisson pilote du requin
 	 */
 	public void ppSaccrocher(Zone zone, PoissonPilote pp);
 
 	/**
-	 * permet au poisson pilote de faire se décrocher du requin et donc de sortire
-	 * de la liste de ce requin et de prendre la nouvelle zone en param
+	 * permet au poisson pilote de faire se décrocher du requin et donc de sortir
+	 * de la liste de ce requin et de prendre la nouvelle zone en paramètre
 	 */
 	public void ppSeDecrocher(PoissonPilote pp);
 
@@ -97,7 +97,7 @@ public interface Ocean {
 	 * permet de créer un requin avec une zone et un identifiant
 	 * 
 	 * @param une zone
-	 * @param un  int pour l'identifiant
+	 * @param un int pour l'identifiant
 	 * @return un requin
 	 */
 	public Requin createRequinId(Zone zone, int id);
@@ -111,7 +111,7 @@ public interface Ocean {
 	public Requin getRequinId(int id);
 
 	/**
-	 * permet de voir si un requin a cette identifiant dans l'océan
+	 * permet de voir si un requin à cet identifiant dans l'océan
 	 * 
 	 * @param un int qui est l'identifiant du requin
 	 * @return un boolean qui indique si le requin existe ou non

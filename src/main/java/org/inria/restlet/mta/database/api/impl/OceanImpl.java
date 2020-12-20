@@ -29,11 +29,12 @@ public class OceanImpl implements Ocean {
 	}
 
 	/**
-	 * Création de notre oceéan avec l'initialisation des zones et l'ajout de
-	 * l'identifiant requin si il y a un requin dans la zone créer
+	 * Creation de notre ocean avec l'initialisation des zones et l'ajout de
+	 * l'identifiant requin si il y a un requin dans la zone créée
 	 */
 	private void creaCarte() {
 		int cpt = 0;
+		int cptPois = 0;
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
 				carte[i][j] = new Zone(i, j, this);
@@ -41,8 +42,13 @@ public class OceanImpl implements Ocean {
 					cpt = cpt + 1;
 					carte[i][j].getRequin().setIdRequin(cpt);
 				}
+				if (!carte[i][j].getListPps().isEmpty()) {
+					cptPois = cptPois + carte[i][j].getListPps().size();
+				}
 			}
 		}
+
+		System.out.println("il y a " + cptPois + " pp dans l'océan");
 		System.out.println("il y a " + getNbRequin() + " requins dans l'océan");
 	}
 
@@ -99,9 +105,9 @@ public class OceanImpl implements Ocean {
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
 				if (carte[i][j].getHasRequin()) {
-//					System.out.println(
-//							"Requin dans la zone : (" + i + ")(" + j + ") ?  ->" + getzoneByCoor(i, j).getHasRequin()
-//									+ " --> Nombre de sardines : " + getzoneByCoor(i, j).getNbSardine());
+					System.out.println(
+							"Requin dans la zone : (" + i + ")(" + j + ") ?  ->" + getzoneByCoor(i, j).getHasRequin()
+									+ " --> Nombre de sardines : " + getzoneByCoor(i, j).getNbSardine());
 				}
 			}
 		}
@@ -113,8 +119,8 @@ public class OceanImpl implements Ocean {
 		int arr_y = dep_y;
 
 		Random rand = new Random();
-		int r = rand.nextInt(4); // utilisation d'un random afin de définir alèatoirement la zone vers la quelle
-									// il va se dirigé
+		int r = rand.nextInt(4); // utilisation d'un random afin de définir aleatoirement la zone vers laquelle
+									// il va se diriger
 
 		if (r == 0) {
 			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace en bas");
@@ -148,8 +154,6 @@ public class OceanImpl implements Ocean {
 
 	@Override
 	public synchronized void deplacementReq(Requin req, Zone zoneArr) {
-		// on a notre stock de poisson pilote
-		// pp saccrocher
 
 		req.getZone().setHasRequin(false);
 
@@ -157,18 +161,14 @@ public class OceanImpl implements Ocean {
 			try {
 				System.out.println("il y a un requin dans la zone(" + zoneArr.getCoordX() + ")(" + zoneArr.getCoordY()
 						+ ") -> on attend");
-				wait(); // req.
+				wait(); 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 		System.out.println("Zone d'arrivée prévue : " + zoneArr);
-
-		// on change de zone
-
 		req.setZone(zoneArr);
 		zoneArr.setHasRequin(true);
-
 		System.out.println(
 				"Le requin " + req.currentThread().getName() + " se trouve désormais dans la zone de coordonné : ("
 						+ req.getZone().getCoordX() + ")(" + req.getZone().getCoordY() + ")");
@@ -176,23 +176,17 @@ public class OceanImpl implements Ocean {
 	}
 
 	public synchronized void ppSaccrocher(Zone zone, PoissonPilote pp) {
-		while (zone.getCptPp() != 0 && zone.getRequin().getPlaceDispo() != 0) {
-			zone.getRequin().getMyPLs().add(pp);
-			zone.setCptPp(zone.getCptPp() - 1);
-			zone.getRequin().setPlaceDispo(zone.getRequin().getPlaceDispo() - 1);
-			System.out.println("le poisson" + pp + "vient de s'accrocher au requin ");
-			notifyAll();
-		}
-
+		zone.getRequin().getMyPLs().add(pp);
+		pp.setReq(zone.getRequin());
+		zone.getListPps().remove(pp);
+		zone.getRequin().setPlaceDispo(zone.getRequin().getPlaceDispo() - 1);
+		notifyAll();
 	}
 
 	public synchronized void ppSeDecrocher(PoissonPilote pp) {
-//		zone.getre
-//		pp.setZone(this.getZone());
-//		this.getMyPLs().remove(pp);
-//		// this.getZone().getListPps().add(pp);
-//		System.out.println("le poison " + Thread.currentThread().getName() + " vient d'arriver dans la zone ");
-
+		pp.setZone(pp.getReq().getZone());
+		pp.getReq().getMyPLs().remove(pp);
+		System.out.println("le poison " + Thread.currentThread().getName() + " vient d'arriver dans la zone ");
 	}
 
 	@Override
@@ -227,7 +221,6 @@ public class OceanImpl implements Ocean {
 
 			}
 		}
-
 		return reqRep;
 	}
 

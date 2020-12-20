@@ -20,7 +20,7 @@ public class requinsRessource extends ServerResource {
 	}
 
 	/**
-	 * permet de retourner le nombre de requin
+	 * permet de retourner le nombre de requin(s)
 	 */
 	@Get("json")
 	public Representation getNbRequin() throws Exception {
