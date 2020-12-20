@@ -14,6 +14,12 @@ class OceanSysteme {
 		ocean = new OceanImpl();
 		 //creationPoissonPilote(ocean);
 		 creationRequin(ocean);
+//		 ocean.createRequinId(ocean.getzoneByCoor(4, 4), 9);
+//		 System.out.println("on a créer le requin dans la zone 4,4");
+//		 System.out.println(ocean.getzoneByCoor(4, 4).getHasRequin());
+//		 ocean.getRequinId(9);
+//		 System.out.println(ocean.getRequinId(9).getLifeRemaining());
+		 
 	}
 
 	/*
@@ -36,7 +42,7 @@ class OceanSysteme {
 		for (int i = 0; i < ocean2.getCarte().length; i++) {
 			for (int j = 0; j < ocean2.getCarte().length; j++) {
 				if (ocean2.getzoneByCoor(i, j).getHasRequin()) {
-					ocean2.getzoneByCoor(i, j).getRequin().setIdRequin(i);
+					//ocean2.getzoneByCoor(i, j).getRequin().setIdRequin(i);
 					ocean2.getzoneByCoor(i, j).getRequin().start();
 				}
 			}

@@ -31,7 +31,7 @@ public class ApplicationRestlet extends Application
         Router router = new Router(getContext());
         router.attach("/zones/{zone_id}", zonesRessource.class);
         router.attach("/requin", requinsRessource.class);
-        router.attach("/requin/{reqId}", requinRessource.class);
+        router.attach("/requin/{req_Id}", requinRessource.class);
         router.attach("/sardine", sardineRessource.class);
         return router;
     }

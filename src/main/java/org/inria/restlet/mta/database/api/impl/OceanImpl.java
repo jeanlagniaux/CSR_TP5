@@ -28,21 +28,30 @@ public class OceanImpl implements Ocean {
 		creaCarte();
 	}
 
+	/**
+	 * Création de notre oceéan avec l'initialisation des zones et l'ajout de
+	 * l'identifiant requin si il y a un requin dans la zone créer
+	 */
+	private void creaCarte() {
+		int cpt = 0;
+		for (int i = 0; i < carte.length; i++) {
+			for (int j = 0; j < carte[i].length; j++) {
+				carte[i][j] = new Zone(i, j, this);
+				if (carte[i][j].getHasRequin()) {
+					cpt = cpt + 1;
+					carte[i][j].getRequin().setIdRequin(cpt);
+				}
+			}
+		}
+		System.out.println("il y a " + getNbRequin() + " requins dans l'océan");
+	}
+
 	public Zone getzoneByCoor(int x, int y) {
 		return carte[x][y];
 	}
 
 	public Zone[][] getCarte() {
 		return carte;
-	}
-
-	private void creaCarte() {
-		for (int i = 0; i < carte.length; i++) {
-			for (int j = 0; j < carte[i].length; j++) {
-				carte[i][j] = new Zone(i, j, this);
-			}
-		}
-		System.out.println("il y a " + getNbRequin() + " requins dans l'océan");
 	}
 
 	@Override
@@ -104,16 +113,15 @@ public class OceanImpl implements Ocean {
 		int arr_y = dep_y;
 
 		Random rand = new Random();
-		int r = rand.nextInt(4);
+		int r = rand.nextInt(4); // utilisation d'un random afin de définir alèatoirement la zone vers la quelle
+									// il va se dirigé
 
 		if (r == 0) {
-			// System.out.println("le requin " + req.currentThread().getName() + " veut se
-			// déplace en bas");
+			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace en bas");
 			arr_x = (dep_x + 1) % (LONGUEUR);
 
 		} else if (r == 1) {
-			// System.out.println("le requin " + req.currentThread().getName() + " veut se
-			// déplace en haut");
+			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace en haut");
 			if (dep_x == 0) {
 				arr_x = 4;
 			} else {
@@ -121,13 +129,11 @@ public class OceanImpl implements Ocean {
 			}
 
 		} else if (r == 2) {
-			// System.out.println("le requin " + req.currentThread().getName() + " veut se
-			// déplace à droite");
+			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace à droite");
 			arr_y = (dep_y + 1) % (LARGEUR);
 
 		} else if (r == 3) {
-			// System.out.println("le requin " + req.currentThread().getName() + " veut se
-			// déplace à gauche");
+			System.out.println("le requin " + req.currentThread().getName() + " veut se déplace à gauche");
 			if (dep_y == 0) {
 				arr_y = 4;
 			} else {
@@ -142,7 +148,6 @@ public class OceanImpl implements Ocean {
 
 	@Override
 	public synchronized void deplacementReq(Requin req, Zone zoneArr) {
-
 		// on a notre stock de poisson pilote
 		// pp saccrocher
 
@@ -168,7 +173,6 @@ public class OceanImpl implements Ocean {
 				"Le requin " + req.currentThread().getName() + " se trouve désormais dans la zone de coordonné : ("
 						+ req.getZone().getCoordX() + ")(" + req.getZone().getCoordY() + ")");
 		notifyAll();
-
 	}
 
 	public synchronized void ppSaccrocher(Zone zone, PoissonPilote pp) {
@@ -210,15 +214,35 @@ public class OceanImpl implements Ocean {
 	}
 
 	@Override
-	public Requin getRequinyId(int id) {
+	public Requin getRequinId(int id) {
 		Requin reqRep = null;
 		for (int i = 0; i < carte.length; i++) {
 			for (int j = 0; j < carte[i].length; j++) {
-				if (getzoneByCoor(i, j).getHasRequin() && getzoneByCoor(i, j).getRequin().getId() == id) {
-					reqRep = getzoneByCoor(i, j).getRequin();
+				if (getzoneByCoor(i, j).getHasRequin()) {
+					Zone zoneAvReq = getzoneByCoor(i, j);
+					if (zoneAvReq.getRequin().getIdRequin() == id) {
+						return reqRep = getzoneByCoor(i, j).getRequin();
+					}
 				}
+
 			}
 		}
+
 		return reqRep;
 	}
+
+	@Override
+	public boolean existReqId(int id) {
+		if (getRequinId(id).equals(null)) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	public Requin createRequinId(Zone zone, int id) {
+		return zone.creaRequinId(id);
+	}
+
 }

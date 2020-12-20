@@ -17,6 +17,13 @@ public class Requin extends Thread {
 		this.lifeRemaining = lifeMax;
 		this.placeDispo = placeMax;
 	}
+	
+	public Requin(Zone zone, int id) {
+		this.zone = zone;
+		this.idRequin = id;
+		this.lifeRemaining = lifeMax;
+		this.placeDispo = placeMax;
+	}
 
 	public void run() {
 		System.out.println("le requin " + Thread.currentThread().getName() + " Nage dans la zone : ("
@@ -113,5 +120,6 @@ public class Requin extends Thread {
 	public void setIdRequin(int idRequin) {
 		this.idRequin = idRequin;
 	}
+	
 
 }

@@ -19,6 +19,9 @@ public class requinsRessource extends ServerResource {
 		backend_ = (Backend) getApplication().getContext().getAttributes().get("backend");
 	}
 
+	/**
+	 * permet de retourner le nombre de requin
+	 */
 	@Get("json")
 	public Representation getNbRequin() throws Exception {
 		int nbRequin = backend_.getDatabase().getNbRequin();
@@ -27,22 +30,30 @@ public class requinsRessource extends ServerResource {
 		return new JsonRepresentation(userObject);
 	}
 
+	/**
+	 * Creation du requin avec une zone et un identifiant depuis methode post
+	 */
 	@Post("json")
 	public Representation createRequin(JsonRepresentation representation) throws Exception {
+		int xResp = 0;
+		int yResp = 0;
 		JSONObject object = representation.getJsonObject();
 		String coord = object.getString("coord");
 		char x = coord.charAt(0);
 		char y = coord.charAt(1);
 		int cord_X = Character.getNumericValue(x);
 		int cord_Y = Character.getNumericValue(y);
+		String idString = object.getString("id");
+		int id = Integer.parseInt(idString);
 
-		// Save the user
-		Requin req = backend_.getDatabase().createRequin(backend_.getDatabase().getzoneByCoor(cord_X, cord_Y));
+		Requin req = backend_.getDatabase().createRequinId(backend_.getDatabase().getzoneByCoor(cord_X, cord_Y), id);
 
 		if (!req.equals(null)) {
 			JSONObject resultObject = new JSONObject();
 			resultObject.put("vie restante", req.getLifeRemaining());
-			resultObject.put("la zone actuelle", req.getZone());
+			xResp = req.getZone().getCoordX();
+			yResp = req.getZone().getCoordY();
+			resultObject.put("la zone actuelle", "" + x + "," + y);
 			JsonRepresentation result = new JsonRepresentation(resultObject);
 			return result;
 		} else {
@@ -52,4 +63,5 @@ public class requinsRessource extends ServerResource {
 			return result;
 		}
 	}
+
 }

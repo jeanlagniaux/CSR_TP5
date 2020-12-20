@@ -73,6 +73,10 @@ public class Zone {
 		this.requin = requin;
 	}
 
+	/**
+	 * ici on utilise des random pour s'avoir si oui ou non on créer un requin dans
+	 * la zone (chance de 1/3)
+	 */
 	public void createRequinAlea() {
 		this.hasRequin = false;
 		Random rand = new Random();
@@ -91,6 +95,19 @@ public class Zone {
 		return this.requin;
 	}
 
+	public Requin creaRequinId(int id) {
+		if (this.getHasRequin() == false) {
+			this.requin = new Requin(this, id);
+			this.hasRequin = true;
+		}
+		return this.requin;
+	}
+
+	/**
+	 * ici on utilise des random pour s'avoir si oui ou non on créer des poisson
+	 * pilote dans cette zone et ensuite on définie aléatoirement le nombre de
+	 * poisson pilote que l'on créer
+	 */
 	public void createPoissonPilote() {
 		Random rand = new Random();
 		int x = rand.nextInt(2);
