@@ -7,7 +7,7 @@ import org.inria.restlet.mta.backend.PoissonPilote;
 import org.inria.restlet.mta.backend.Requin;
 import org.inria.restlet.mta.backend.Zone;
 import org.inria.restlet.mta.database.api.Ocean;
-import org.inria.restlet.mta.resources.requinRessource;
+import org.inria.restlet.mta.resources.requinsRessource;
 
 /**
  *

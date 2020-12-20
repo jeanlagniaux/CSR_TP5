@@ -2,6 +2,7 @@ package org.inria.restlet.mta.application;
 
 
 import org.inria.restlet.mta.resources.requinRessource;
+import org.inria.restlet.mta.resources.requinsRessource;
 import org.inria.restlet.mta.resources.sardineRessource;
 import org.inria.restlet.mta.resources.zonesRessource;
 import org.restlet.Application;
@@ -29,8 +30,8 @@ public class ApplicationRestlet extends Application
     {
         Router router = new Router(getContext());
         router.attach("/zones/{zone_id}", zonesRessource.class);
-        router.attach("/requin", requinRessource.class);
-        router.attach("/requin/{requin_id}", requinRessource.class);
+        router.attach("/requin", requinsRessource.class);
+        router.attach("/requin/{reqId}", requinRessource.class);
         router.attach("/sardine", sardineRessource.class);
         return router;
     }
