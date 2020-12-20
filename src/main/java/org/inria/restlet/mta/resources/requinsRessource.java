@@ -31,8 +31,10 @@ public class requinsRessource extends ServerResource {
 	public Representation createRequin(JsonRepresentation representation) throws Exception {
 		JSONObject object = representation.getJsonObject();
 		String coord = object.getString("coord");
-		int cord_X = Integer.valueOf(coord.charAt(0));
-		int cord_Y = Integer.valueOf(coord.charAt(1));
+		char x = coord.charAt(0);
+		char y = coord.charAt(1);
+		int cord_X = Character.getNumericValue(x);
+		int cord_Y = Character.getNumericValue(y);
 
 		// Save the user
 		Requin req = backend_.getDatabase().createRequin(backend_.getDatabase().getzoneByCoor(cord_X, cord_Y));

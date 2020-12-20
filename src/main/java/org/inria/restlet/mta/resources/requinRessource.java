@@ -19,6 +19,7 @@ public class requinRessource extends ServerResource {
 
 	@Get("json")
 	public Representation getRequin() throws Exception {
+		// erreur de requin null => a voir le fonctionnement de la méthode get requin by ID
 		String id = (String) getRequest().getAttributes().get("reqId");
 		int id_Req = Integer.valueOf(id);
 		Requin req = backend_.getDatabase().getRequinyId(id_Req);
